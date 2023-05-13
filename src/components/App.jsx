@@ -5,6 +5,7 @@ import { Component } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { nanoid } from 'nanoid';
 export class App extends Component {
   state = {
     contacts: [],
@@ -26,17 +27,29 @@ export class App extends Component {
     }
   }
 
-  addContact = newContact => {
-    const duplicateContact = this.state.contacts.find(
-      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-    );
-    if (duplicateContact) {
-      alert(`${duplicateContact.name} is already in contacts.`);
-      console.log(duplicateContact.name);
+  // addContact = newContact => {
+  //   const duplicateContact = this.state.contacts.find(
+  //     contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+  //   );
+  //   if (duplicateContact) {
+  //     alert(`${duplicateContact.name} is already in contacts.`);
+  //     console.log(duplicateContact.name);
+  //     return;
+  //   }
+  //   const updatedContacts = [...this.state.contacts, newContact];
+  //   this.setState({ contacts: updatedContacts });
+  // };
+  addContact = (contact, name) => {
+    if (this.state.contacts.find(contact => contact.name === name)) {
+      alert(`${name} is already in contacts.`);
       return;
+    } else {
+      const newContact = { ...contact, id: nanoid() };
+      const updateContacts = [...this.state.contacts, newContact];
+      this.setState({
+        contacts: updateContacts,
+      });
     }
-    const updatedContacts = [...this.state.contacts, newContact];
-    this.setState({ contacts: updatedContacts });
   };
 
   deleteContact = contactId => {

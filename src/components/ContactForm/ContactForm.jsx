@@ -3,7 +3,6 @@ import { Form, ErrorMessage } from './ContactForm.styled';
 import * as yup from 'yup';
 import 'yup-phone';
 // import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
 import { ButtonForm } from './ContactForm.styled';
 
 const contactFormSchema = yup.object().shape({
@@ -29,7 +28,7 @@ export const ContactForm = ({ onSave }) => {
       initialValues={{ name: '', number: '' }}
       validationSchema={contactFormSchema}
       onSubmit={(values, actions) => {
-        onSave({ ...values, id: nanoid() });
+        onSave({ ...values });
         actions.resetForm();
       }}
     >
